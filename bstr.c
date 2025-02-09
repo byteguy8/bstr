@@ -152,6 +152,26 @@ int bstr_append_args(BStr *str, char *format, ...){
     return 0;
 }
 
+int bstr_append_range(char *raw_str, size_t start, size_t end, BStr *str){
+    assert(start <= end);
+    size_t str_len = end - start + 1;
+
+    if(BSTR_OUTOFSPACE(str_len, str)){
+        size_t new_len = BSTR_NEWLEN(str_len, str);
+        
+        if(grow(new_len, str)){
+            return 1;
+        }
+    }
+
+    memcpy(str->buff + str->used, raw_str + start, str_len);
+    
+    str->used += str_len;
+    str->buff[str->used] = 0;
+
+    return 0;
+}
+
 int bstr_insert(size_t at, char *raw_str, BStr *str){
     size_t str_len = strlen(raw_str);
 
