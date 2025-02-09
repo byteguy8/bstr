@@ -1,9 +1,9 @@
 #include "bstr.h"
-
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <assert.h>
 
 #define BSTR_SIZE (sizeof(BStr))
 #define BSTR_OUTOFSPACE(str_len, str) ((str)->used + (str_len) >= (str)->len)
